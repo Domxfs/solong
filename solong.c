@@ -6,11 +6,24 @@
 /*   By: dallocca <dallocca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 15:44:32 by dallocca          #+#    #+#             */
-/*   Updated: 2022/10/28 20:24:02 by dallocca         ###   ########.fr       */
+/*   Updated: 2022/10/29 16:13:59 by dallocca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
+
+void	free_matrix(char **mat)
+{
+	int	i;
+
+	i = 0;
+	while (mat[i])
+	{
+		free(mat[i]);
+		i++;
+	}
+	free(mat);
+}
 
 int	main(int argc, char **argv)
 {
@@ -22,7 +35,7 @@ int	main(int argc, char **argv)
 	if (!mapread(argv[1], &vars) || !check_char("PEC01", &vars) || \
 			!final_checker(&vars) || !ber_check(".ber", argv[1]))
 	{
-		free(&vars);
+		free_matrix(vars.data.mat);
 		return (0);
 	}
 	startimage(&vars);
